@@ -35,10 +35,6 @@ function App() {
           <Route path="/" element={<Landing />} />
         </Routes>
       </Router>
-
-      {/* <div className="Test">
-        <Users />
-      </div> */}
     </ApolloProvider>
   );
 }
