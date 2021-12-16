@@ -31,7 +31,7 @@ function Signup() {
 	}
 
 	const validationSchema = Yup.object({
-		email: Yup.string().email("Invalid email address").required("Email dev required"),
+		email: Yup.string().email("Invalid email address").required("Email def required"),
 		password: Yup.string().max(20, "Must be 20 characters or less").required("Password Very much required"),
 		confirmPassword: Yup.string().oneOf([ Yup.ref("password") ], "Passwords gotta match"),
 		name: Yup.string().max(15, "Must be 15 characters or less").required("Name for sure is required")
