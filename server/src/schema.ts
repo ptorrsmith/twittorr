@@ -140,7 +140,7 @@ const Mutation = objectType({
           },
         })
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token: sign({ userId: user.id }, APP_SECRET), // token = JWT
           user,
         }
       },
