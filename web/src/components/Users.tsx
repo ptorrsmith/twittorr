@@ -1,5 +1,6 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom'
 
 const USERS_QUERY = gql`
 query USERS_QUERY {
@@ -24,15 +25,25 @@ export default function Users() {
   if (error) return <p>Error :( "{error.message}"</p>
 
   return (
-    <div className="users">
-      <p>Hi</p>
-      {data.users.map((user: User) => (
-        <div key={user.id}>
-          <h2>{user.name}</h2>
-        </div>
+    <>
+      <div className="users">
+        <p>Hi</p>
+        {data.users.map((user: User) => (
+          <div key={user.id}>
+            <h2>{user.name}</h2>
+          </div>
+            )
           )
-        )
-      }
-    </div>
+        }
+      </div>
+      <div className="register">
+        <h4>Home</h4>
+        <Link to="/">Home</Link>
+     </div>
+     <div className="register">
+        <h4>Had enough?</h4>
+        <Link to="/signup">Log out</Link>
+     </div>
+    </>
   );
 }
