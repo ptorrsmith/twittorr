@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import Users from './components/Users'
 import Landing from './components/Landing'
+import Signup from './pages/Signup'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { setContext } from 'apollo-link-context'
 
@@ -31,6 +32,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Routes>
+          <Route path="/signup" element={<Signup />} />
           <Route path="/users" element={<Users />} />
           <Route path="/" element={<Landing />} />
         </Routes>
