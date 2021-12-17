@@ -4,54 +4,48 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 
-const SIGNUP_MUTATION = gql`
-	mutation signup($name: String, $email: String!, $password: String!) {
-		signup(name: $name, email: $email, password: $password) {
+const LOGIN_MUTATION = gql`
+	mutation login($email: String!, $password: String!) {
+		login(email: $email, password: $password) {
 			token
 		}
 	}
 `
 
-interface SignupValues {
+interface LoginValues {
 	email: string
 	password: string
-	confirmPassword: string
-	name: string
 }
 
-function Signup() {
+function Login() {
 	const navigate = useNavigate()
-	const [ signup, { data } ] = useMutation(SIGNUP_MUTATION)
+	const [ login, { data } ] = useMutation(LOGIN_MUTATION)
 
-	const initialValues: SignupValues = {
+	const initialValues: LoginValues = {
 		email: "",
-		password: "",
-		confirmPassword: "",
-		name: ""
+		password: ""
 	}
 
 	const validationSchema = Yup.object({
 		email: Yup.string().email("Invalid email address").required("Email def required"),
 		password: Yup.string().max(20, "Must be 20 characters or less").required("Password Very much required"),
-		confirmPassword: Yup.string().oneOf([ Yup.ref("password") ], "Passwords gotta match"),
-		name: Yup.string().max(15, "Must be 15 characters or less").required("Name for sure is required")
 	})
 
 	return (
 		<div className="container">
 			<div className="nav">
-				<Link to="/">Home</Link> | <Link to="/login">Login</Link>
+				<Link to="/">Home</Link> | <Link to="/signup">Register</Link>
 			</div>
-			<h3>Join us</h3>
+			<h3>Log in</h3>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { setSubmitting }) => {
 					setSubmitting(true)
-					const response = await signup({
+					const response = await login({
 						variables: values
 					})
-					localStorage.setItem("token", response.data.signup.token)
+					localStorage.setItem("token", response.data.login.token)
 					setSubmitting(false)
 					navigate("/users")
 				}}
@@ -59,14 +53,10 @@ function Signup() {
 				<Form>
 					<Field name="email" type="text" placeholder="Email" />
 					<ErrorMessage name="email" component={"div"} />
-					<Field name="name" type="text" placeholder="Name" />
-					<ErrorMessage name="name" component={"div"} />
 					<Field name="password" type="password" placeholder="Password" />
 					<ErrorMessage name="password" component={"div"} />
-					<Field name="confirmPassword" type="password" placeholder="Confirm Password" />
-					<ErrorMessage name="confirmPassword" component={"div"} />
 					<button type="submit" className="login-button">
-						<span>Sign up</span>
+						<span>Log in</span>
 					</button>
 				</Form>
 			</Formik>
@@ -74,4 +64,4 @@ function Signup() {
 	)
 }
 
-export default Signup
+export default Login

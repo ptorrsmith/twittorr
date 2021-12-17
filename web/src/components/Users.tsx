@@ -7,6 +7,7 @@ query USERS_QUERY {
   users {
     id
     name
+    email
   }
 }
 `
@@ -14,6 +15,7 @@ query USERS_QUERY {
 interface User {
   id: string;
   name: string;
+  email: string;
 }
 
 export default function Users() {
@@ -26,11 +28,15 @@ export default function Users() {
 
   return (
     <>
+			<div className="nav">
+				<Link to="/">Home</Link> | <Link to="/logout">Logout</Link>
+			</div>
       <div className="users">
-        <p>Hi</p>
+        <h3>All Users</h3>
         {data.users.map((user: User) => (
           <div key={user.id}>
-            <h2>{user.name}</h2>
+            <h5>{user.name}</h5>
+            <div>{user.email}</div>
           </div>
             )
           )
